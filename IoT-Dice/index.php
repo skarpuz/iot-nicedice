@@ -77,7 +77,50 @@
 </body>
 
 <footer id="footer">
-	
+	<?php
+$host = "localhost";
+$user = "root";
+$pass = "root";
+$db_name = "iot-dice";
+
+ //create connection
+$connection = mysqli_connect($host, $user, $pass, $db_name);
+
+ //test if connection failed
+if(mysqli_connect_errno()){
+die("connection failed: "
+. mysqli_connect_error()
+. " (" . mysqli_connect_errno()
+. ")");
+}
+//get results from database
+$result = mysqli_query($connection,"SELECT * FROM dice");
+$all_property = array(); //declare an array for saving property
+
+ //showing property
+echo '
+<table class="table">
+<thead>
+<tr>
+<th scope="col">Id</th>
+<th scope="col">Latest roll</th>
+<th scope="col">Date</th>
+<th scope="col">Time</th>
+</tr>
+</thead>
+<tbody>';
+//showing all data
+while ($row = mysqli_fetch_array($result)) {
+echo "<tr>";
+echo "<td>" . $row['id'] . "</td>";
+echo "<td>" . $row['latest_roll'] . "</td>";
+echo "<td>" . $row['date'] . "</td>";
+echo "<td>" . $row['time'] . "</td>";
+//get items using property value
+echo '</tr>';
+}
+echo "</table>";
+?>
 </footer>
 
 </html>

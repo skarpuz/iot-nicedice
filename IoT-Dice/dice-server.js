@@ -1,14 +1,15 @@
 const express = require("express");
 const http = require("http");
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, './dice-server.env') });
 
 var app = express();
 
 // index.html in '/static' folder
 app.use(express.static(__dirname + "/static"));
 
-const port = 5000;
-http.createServer(app).listen(port, function () {
-    console.log("dice-server listening on port " + port + "!");
+http.createServer(app).listen(process.env.PORT, function () {
+    console.log("dice-server listening on port " + process.env.PORT + "!");
 });
 
 app.get("/rolldice", function (req, res) {

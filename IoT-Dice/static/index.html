@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>🎲 Nice-Dice</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/favicon.png" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=IM+Fell+DW+Pica" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="js/index.js" type="text/javascript"></script>
+</head>
+
+<body id="body">
+
+    <header id="header">
+        <nav class="navbar navbar-style">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href=""><img class="logo" src="images/dicelogo.png"></a>
+                    <p class="NiceDice"> Nice Dice </p>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <p class="lastroll-title">Last roll:</p>
+
+
+    <div class="lastroll">
+        <img class="lastrollimg" src="images/dice3.jpg">
+    </div>
+
+
+    <p class="statistics-title"> Statistics: </p>
+
+    <div class="statistics-info">
+        <div class="dice-dots">
+            <img class="diceside" src="images/dice1.jpg">
+            <p class="statistic-side1">4</p>
+        </div>
+
+        <div class="dice-dots">
+            <img class="diceside" src="images/dice2.jpg">
+            <p class="statistic-side2">7</p>
+        </div>
+
+        <div class="dice-dots">
+            <img class="diceside" src="images/dice3.jpg">
+            <p class="statistic-side3">2</p>
+        </div>
+
+        <div class="dice-dots">
+            <img class="diceside" src="images/dice4.jpg">
+            <p class="statistic-side4">9</p>
+        </div>
+
+        <div class="dice-dots">
+            <img class="diceside" src="images/dice5.jpg">
+            <p class="statistic-side5">6</p>
+        </div>
+
+        <div class="dice-dots">
+            <img class="diceside" src="images/dice6.jpg">
+            <p class="statistic-side6">1</p>
+        </div>
+    </div>
+
+    <div class="database-contents">
+        <!-- https://www.w3schools.com/nodejs/nodejs_mysql.asp -->
+        <!--  TODO -->
+        <table class="dicedata-table">
+            <thead class="dicedata-table-head">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Latest roll</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                </tr>
+            </thead>
+            <tbody class="dicedata-table-body">
+                <!-- TODO -->
+                <tr>
+                    <td>1</td>
+                    <td>5</td>
+                    <td>2021-09-21</td>
+                    <td>15:12:52</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

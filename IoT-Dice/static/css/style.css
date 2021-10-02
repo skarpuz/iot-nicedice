@@ -1,22 +1,22 @@
-*{
+* {
 	margin: 0;
 	padding: 0;
 }
 
-.header{
+.header {
 	height: 100vh;
 }
 
-.navbar-style{
+.navbar-style {
 	box-shadow: 0 5px 10px #efefef;
 }
 
-.logo{
+.logo {
 	height: 100px;
 	padding: 2px 10px;
 }
 
-.NiceDice{
+.NiceDice {
 	float: right;
 	font-size: 61px;
 	padding-left: 5vh;
@@ -24,64 +24,79 @@
 	padding-right: 5vh;
 }
 
-.lastroll-title{
+.lastroll-title {
 	text-align: center;
 	font-size: 8vh;
 }
 
-.lastroll{
+.lastroll {
 	text-align: center;
 }
 
-.lastrollimg{
+.lastrollimg {
 	height: 30vh;
 }
 
-.statistics-title{
+.statistics-title {
 	text-align: center;
 	font-size: 8vh;
 }
 
-.statistics-info{
+.statistics-info {
 	text-align: center;
 	display: block;
-  	margin-left: auto;
-  	margin-right: auto;
-  	width: 65%;
+	margin-left: auto;
+	margin-right: auto;
+	width: 65%;
 }
 
-.dice-dots{
+.dice-dots {
 	text-align: center;
 	float: left;
 }
 
-.diceside{
+.diceside {
 	height: 20vh;
 	padding-right: 2vh;
 }
 
 
-.statistic-side1{
+.statistic-side1 {
 	font-size: 5vh;
 }
 
-.statistic-side2{
+.statistic-side2 {
 	font-size: 5vh;
 }
 
-.statistic-side3{
+.statistic-side3 {
 	font-size: 5vh;
 }
 
-.statistic-side4{
+.statistic-side4 {
 	font-size: 5vh;
 }
 
-.statistic-side5{
+.statistic-side5 {
 	font-size: 5vh;
 }
 
-.statistic-side6{
+.statistic-side6 {
 	font-size: 5vh;
 }
 
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+tr:nth-child(even) {
+	background-color: #dddddd;
+}

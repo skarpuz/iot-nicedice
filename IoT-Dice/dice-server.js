@@ -55,12 +55,10 @@ app.get("/rolldice", function (req, res) {
 });
 
 app.get("/dicedata", (req, res) => {
-    connection.query('SELECT * from dicedata', (err, rows) => {
+    connection.query('SELECT * from dicedata ORDER BY time DESC;', (err, rows) => {
         if(err) {
             throw err;
         }
-        console.log('The data from dicedata table: \n', rows);
-        connection.end();
 
         res.json(rows);
     });

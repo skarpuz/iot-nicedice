@@ -2,7 +2,9 @@ const express = require("express");
 const http = require("http");
 const mysql = require('mysql');
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, './dice-server.env') });
+require('dotenv').config({
+    path: path.resolve(__dirname, './dice-server.env')
+});
 
 const connection = mysql.createConnection({
     host: process.env.HOST,
@@ -56,14 +58,14 @@ app.get("/rolldice", function (req, res) {
 
 app.get("/dicedata", (req, res) => {
     connection.query('SELECT * from dicedata ORDER BY time DESC;', (err, rows) => {
-        if(err) {
+        if (err) {
             throw err;
         }
 
-        let dicedata = [];
+        let arrayDicedata = [];
 
         rows.forEach(row => {
-            dicedata.push({
+            arrayDicedata.push({
                 date: row.date,
                 time: row.time,
                 number: row.number
@@ -71,7 +73,7 @@ app.get("/dicedata", (req, res) => {
         });
 
         res.json({
-            data: dicedata
+            data: arrayDicedata
         });
     });
 });

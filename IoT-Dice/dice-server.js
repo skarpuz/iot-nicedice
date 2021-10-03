@@ -60,6 +60,18 @@ app.get("/dicedata", (req, res) => {
             throw err;
         }
 
-        res.json(rows);
+        let dicedata = [];
+
+        rows.forEach(row => {
+            dicedata.push({
+                date: row.date,
+                time: row.time,
+                number: row.number
+            });
+        });
+
+        res.json({
+            data: dicedata
+        });
     });
 });

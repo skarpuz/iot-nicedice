@@ -53,3 +53,15 @@ app.get("/rolldice", function (req, res) {
     //      > Update counters
     //      > Update DB rows
 });
+
+app.get("/dicedata", (req, res) => {
+    connection.query('SELECT * from dicedata', (err, rows) => {
+        if(err) {
+            throw err;
+        }
+        console.log('The data from dicedata table: \n', rows);
+        connection.end();
+
+        res.json(rows);
+    });
+});

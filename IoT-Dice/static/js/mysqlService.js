@@ -25,3 +25,5 @@
          callback(err, conn);
      });
  }
+
+ exports.getConnection = getConnection;

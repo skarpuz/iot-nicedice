@@ -75,5 +75,23 @@ function READ(callback) {
     });
 }
 
+/**
+ * UPDATE
+ * Not implemented since this app has no need for an UPDATE functionality.
+ */
+function UPDATE() {
+    // Empty
+}
+
+/**
+ * DELETE
+ * Not implemented since this app has no need for a DELETE functionality
+ */
+function DELETE() {
+    // Empty
+}
+
 exports.create = CREATE;
 exports.getDiceData = READ;
+exports.update = UPDATE;
+exports.delete = DELETE;

@@ -65,6 +65,16 @@ app.get('/numbercount', (req, res) => {
     console.log("\nGET - /numbercount");
 
     let query = retrieveQuery(req);
+    
+    if (query.get("number") !== undefined) {
+        dbUtil.getCount(query.get('number'), (rollcount) => {
+          res.json({
+            count: rollcount
+          });
+        });
+      } else {
+        res.send("Error: missing 'number' query parameter");
+      }
   });
 
   function retrieveQuery(req) {

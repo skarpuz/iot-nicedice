@@ -6,6 +6,8 @@ require('dotenv').config({
     path: path.resolve(__dirname, './dice-server.env')
 });
 
+const dbUtil = require("./static/js/crud");
+
 var app = express();
 
 // index.html in '/static' folder
@@ -42,23 +44,12 @@ app.get("/rolldice", function (req, res) {
 });
 
 app.get("/dicedata", (req, res) => {
-    connection.query('SELECT * from dicedata ORDER BY time DESC;', (err, rows) => {
-        if (err) {
-            throw err;
-        }
+    console.log("\nGET - /dicedata");
 
-        let arrayDicedata = [];
-
-        rows.forEach(row => {
-            arrayDicedata.push({
-                date: row.date,
-                time: row.time,
-                number: row.number
-            });
-        });
-
-        res.json({
-            data: arrayDicedata
-        });
+    dbUtil.getDiceData((arrayDicedata) => {
+      res.json({
+        amount: arrayDicedata.length,
+        data: arrayDicedata
+      });
     });
 });

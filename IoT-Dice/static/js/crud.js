@@ -38,4 +38,4 @@ function READ(callback) {
     });
   }
 
- exports.create = CREATE;
+ exports.getDiceData = READ;

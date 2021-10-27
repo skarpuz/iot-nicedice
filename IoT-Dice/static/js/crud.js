@@ -91,7 +91,38 @@ function DELETE() {
     // Empty
 }
 
+/**
+ * Get the number of entries with 'number' equal to 'numberRolled'
+ * Basically, this gets the count of how many times a certain number is rolled.
+ * 
+ * @param {*} numberRolled The number to consider this query for
+ */
+function getCount(numberRolled, callback) {
+    mysqlConnection.getConnection((err, conn) => {
+        if (err) {
+            console.log("ERROR!");
+            throw err;
+        }
+
+        let sql = "SELECT * from dicedata WHERE number = ?;";
+
+        let inserts = [numberRolled];
+        sql = mysqlConnection.formatSQL(sql, inserts);
+
+        conn.query(sql, function (err, rows) {
+            if (err) {
+                throw err;
+            }
+
+            callback(rows.length);
+        });
+
+        conn.release();
+    });
+}
+
 exports.create = CREATE;
 exports.getDiceData = READ;
 exports.update = UPDATE;
 exports.delete = DELETE;
+exports.getCount = getCount;

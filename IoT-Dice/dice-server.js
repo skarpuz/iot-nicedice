@@ -7,6 +7,7 @@ require('dotenv').config({
 });
 
 const dbUtil = require("./static/js/crud");
+const diceAPI = require("./static/js/diceAPI");
 
 var app = express();
 
@@ -18,10 +19,13 @@ http.createServer(app).listen(process.env.PORT, function () {
 });
 
 app.get("/rolldice", function (req, res) {
-    console.log("/rolldice - GET");
-    res.json({
-        data: null
-    });
+    console.log("\nGET - /rolldice");
+
+    diceAPI.rollDice((numberRolled) => {
+        res.json({
+            number: numberRolled
+        });
+  });
 
     // TODO
 

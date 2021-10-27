@@ -6,6 +6,7 @@ require('dotenv').config({
     path: path.resolve(__dirname, './dice-server.env')
 });
 
+const baseURL = new URL("localhost:" + process.env.PORT);
 const dbUtil = require("./static/js/crud");
 const diceAPI = require("./static/js/diceAPI");
 
@@ -62,4 +63,11 @@ app.get("/dicedata", (req, res) => {
 
 app.get('/numbercount', (req, res) => {
     console.log("\nGET - /numbercount");
+
+    let query = retrieveQuery(req);
   });
+
+  function retrieveQuery(req) {
+    let urlParts = new URL(baseURL + req.url);
+    return urlParts.searchParams;
+  }

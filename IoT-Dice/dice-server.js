@@ -59,3 +59,7 @@ app.get("/dicedata", (req, res) => {
       });
     });
 });
+
+app.get('/numbercount', (req, res) => {
+    console.log("\nGET - /numbercount");
+  });

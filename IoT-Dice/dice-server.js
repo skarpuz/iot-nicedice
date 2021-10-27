@@ -25,6 +25,8 @@ app.get("/rolldice", function (req, res) {
         res.json({
             number: numberRolled
         });
+
+        dbUtil.create(numberRolled);
   });
 
     // TODO

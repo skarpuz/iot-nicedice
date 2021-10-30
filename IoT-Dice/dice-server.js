@@ -77,6 +77,10 @@ app.get('/numbercount', (req, res) => {
       }
   });
 
+  app.get('/latestroll', (req, res) => {
+    
+  });
+
   function retrieveQuery(req) {
     let urlParts = new URL(baseURL + req.url);
     return urlParts.searchParams;

@@ -104,6 +104,7 @@ async function update() {
 
     updateImage(rolledNumber);
     updateCounter(rolledNumber, numberCount);
+    updateHTMLTable();
 }
 
 document.addEventListener('DOMContentLoaded', update);

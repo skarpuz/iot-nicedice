@@ -77,6 +77,16 @@ app.get('/numbercount', (req, res) => {
       }
   });
 
+  app.get('/latestroll', (req, res) => {
+    console.log("\nGET - /latestroll");
+  
+    dbUtil.getLatestRoll((latestroll) => {
+      res.json({
+        roll: latestroll,
+      });
+    });
+  });
+
   function retrieveQuery(req) {
     let urlParts = new URL(baseURL + req.url);
     return urlParts.searchParams;

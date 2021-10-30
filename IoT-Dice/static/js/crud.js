@@ -121,8 +121,44 @@ function getCount(numberRolled, callback) {
     });
 }
 
+function getLatestRoll(callback) {
+    mysqlConnection.getConnection((err, conn) => {
+      if (err) {
+        console.log("ERROR!");
+        throw err;
+      }
+
+      let sql = "SELECT * FROM dicedata ORDER BY time DESC LIMIT 1;";
+
+      conn.query(sql, function (err, rows) {
+        if (err) {
+          throw err;
+        }
+
+        let latestRoll = {};
+
+        if(rows.length != 0) {
+          latestRoll = {
+            number :  rows[0].number,
+            time : rows[0].time,
+            date : rows[0].date
+          };
+        } else {
+          latestRoll = {
+            number: 0
+          }
+        }
+
+        callback(latestRoll);
+      });
+
+      conn.release();
+    });
+}
+
 exports.create = CREATE;
 exports.getDiceData = READ;
 exports.update = UPDATE;
 exports.delete = DELETE;
 exports.getCount = getCount;
+exports.getLatestRoll = getLatestRoll;

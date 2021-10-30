@@ -12,6 +12,17 @@ function updateImage(rolledNumber) {
     lastRollImage.src = `../images/dice${rolledNumber}.jpg`;
 }
 
+/**
+ * Update the counter of the current number rolled
+ * 
+ * @param rolledNumber The current number rolled
+ * @param numberCount The number of times the <rolledNumber> has been rolled up until now
+ */
+ function updateCounter(rolledNumber, numberCount) {
+    const counter = document.getElementsByClassName(`statistic-side${rolledNumber}`).item(0);
+    counter.innerHTML = numberCount;
+  }
+
 function loadHTMLTable(data) {
     const table = document.getElementsByClassName('dicedata-table-body').item(0);
 
@@ -46,6 +57,19 @@ async function getLatestRoll() {
 }
 
 /**
+ * Get the number of times <rolledNumber> has been rolled up until now
+ * 
+ * @param rolledNumber The number that is rolled at the current dice roll
+ * @returns The number of times this number has been rolled up until now
+ */
+ async function getNumberCount(rolledNumber) {
+    const response = await fetch(`/numbercount?number=${rolledNumber}`);
+    const numberCount = await response.json(); //.json() returns the result of taking JSON as input and parsing it to produce a JavaScript object
+  
+    return numberCount.count;
+  }
+
+/**
  * General update function that calls the update functions for the separate components that need to be updated on the page
  */
 async function update() {
@@ -61,9 +85,12 @@ async function update() {
     if (latestRoll.number == 0) {
         return;
     }
-
+    
     const rolledNumber = latestRoll.number;
+    const numberCount = await getNumberCount(rolledNumber);
+
     updateImage(rolledNumber);
+    updateCounter(rolledNumber, numberCount);
 }
 
 document.addEventListener('DOMContentLoaded', update);

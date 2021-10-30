@@ -86,10 +86,6 @@ async function getLatestRoll() {
  * General update function that calls the update functions for the separate components that need to be updated on the page
  */
 async function update() {
-    fetch('http://localhost:5000/dicedata')
-        .then(response => response.json())
-        .then(data => loadHTMLTable(data['data']));
-
     const latestRoll = await getLatestRoll();
 
     // At start up the database is cleared, meaning getLatestRoll() has no data to fetch.

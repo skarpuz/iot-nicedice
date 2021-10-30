@@ -112,4 +112,10 @@ async function update() {
     updateHTMLTable();
 }
 
-document.addEventListener('DOMContentLoaded', update);
+/**
+ * Update the page every two seconds
+ */
+$(document).ready(async function refresh() {
+    await update();
+    setTimeout(refresh, 2000); // function refers to itself
+});

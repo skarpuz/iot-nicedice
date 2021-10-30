@@ -11,7 +11,11 @@ let prevTimestamp = 0;
  */
 function updateImage(rolledNumber) {
     const lastRollImage = document.getElementsByClassName(`lastrollimg`).item(0);
-    lastRollImage.src = `../images/dice${rolledNumber}.jpg`;
+    lastRollImage.classList.add("shake");
+    setTimeout(function () {
+        lastRollImage.classList.remove("shake");
+        lastRollImage.src = `../images/dice${rolledNumber}.jpg`;
+    }, 1000);
 }
 
 /**

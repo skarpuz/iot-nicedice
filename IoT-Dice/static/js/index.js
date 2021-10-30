@@ -46,6 +46,19 @@ async function getLatestRoll() {
 }
 
 /**
+ * Get the number of times <rolledNumber> has been rolled up until now
+ * 
+ * @param rolledNumber The number that is rolled at the current dice roll
+ * @returns The number of times this number has been rolled up until now
+ */
+ async function getNumberCount(rolledNumber) {
+    const response = await fetch(`/numbercount?number=${rolledNumber}`);
+    const numberCount = await response.json(); //.json() returns the result of taking JSON as input and parsing it to produce a JavaScript object
+  
+    return numberCount.count;
+  }
+
+/**
  * General update function that calls the update functions for the separate components that need to be updated on the page
  */
 async function update() {

@@ -23,6 +23,11 @@ function updateImage(rolledNumber) {
     counter.innerHTML = numberCount;
   }
 
+/**
+ * Construct an HTML table containing the dice data of all rolls
+ * 
+ * @param arrayOfRolls An array of all rolls up until now
+ */
 function loadHTMLTable(data) {
     const table = document.getElementsByClassName('dicedata-table-body').item(0);
 

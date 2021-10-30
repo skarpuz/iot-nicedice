@@ -10,8 +10,12 @@ let prevTimestamp = 0;
  * @param rolledNumber The current number rolled
  */
 function updateImage(rolledNumber) {
-    const lastRollImage = document.getElementsByClassName(`lastrollimg`).item(0);
-    lastRollImage.src = `../images/dice${rolledNumber}.jpg`;
+    const lastestRollImage = document.getElementsByClassName(`lastrollimg`).item(0);
+    lastestRollImage.classList.add("shake");
+    setTimeout(function () {
+        lastestRollImage.classList.remove("shake");
+        lastestRollImage.src = `../images/dice${rolledNumber}.jpg`;
+    }, 1000);
 }
 
 /**

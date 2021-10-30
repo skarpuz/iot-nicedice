@@ -36,4 +36,14 @@ function loadHTMLTable(data) {
     });
 
     table.innerHTML = tableHtml;
+}/**
+ * Get the information of the latest dice roll
+ * 
+ * @returns The number, time and date of the latest dice roll
+ */
+async function getLatestRoll() {
+    const response = await fetch("/latestroll");
+    const latestroll = await response.json(); //.json() returns the result of taking JSON as input and parsing it to produce a JavaScript object
+
+    return latestroll.roll;
 }

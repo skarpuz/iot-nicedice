@@ -11,23 +11,28 @@
  *   }
  * 
  */
- const axios = require("axios");
+const axios = require("axios");
 
- function rollDice(callback) {
-   axios.get("http://api.iot.hva-robots.nl/dice")
-     .then((response) => {
-       
-       // Retrieve the response data object
-       const responseData = response.data;
- 
-       // Retrieve the actual rolled number by accessing the response object (see JSON example above)
-       const number = responseData.data.dice;
- 
-       callback(number);
-     })
-     .catch((err) => {
-       console.log("Error: ", err.message);
-     });
- }
- 
- exports.rollDice = rollDice;
+/**
+ * Call the roll-dice endpoint and retrieve the rolled number
+ * 
+ * @param callback The callback function to execute once this function is done
+ */
+function rollDice(callback) {
+  axios.get("http://api.iot.hva-robots.nl/dice")
+    .then((response) => {
+
+      // Retrieve the response data object
+      const responseData = response.data;
+
+      // Retrieve the actual rolled number by accessing the response object (see JSON example above)
+      const number = responseData.data.dice;
+
+      callback(number);
+    })
+    .catch((err) => {
+      console.log("Error: ", err.message);
+    });
+}
+
+exports.rollDice = rollDice;

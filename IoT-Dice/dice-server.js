@@ -1,9 +1,8 @@
 const express = require("express");
 const http = require("http");
-const mysql = require('mysql');
 const path = require('path');
 require('dotenv').config({
-    path: path.resolve(__dirname, './dice-server.env')
+  path: path.resolve(__dirname, './dice-server.env')
 });
 
 const baseURL = new URL("localhost:" + process.env.PORT);
@@ -16,79 +15,60 @@ var app = express();
 app.use(express.static(__dirname + "/static"));
 
 http.createServer(app).listen(process.env.PORT, function () {
-    console.log("dice-server listening on port " + process.env.PORT + "!");
-    dbUtil.clearDB(() => console.log("Database is cleared, ready for use."));
+  console.log("dice-server listening on port " + process.env.PORT + "!");
+  dbUtil.clearDB(() => console.log("Database is cleared, ready for use."));
 });
 
 app.get("/rolldice", function (req, res) {
-    console.log("\nGET - /rolldice");
+  console.log("\nGET - /rolldice");
 
-    diceAPI.rollDice((numberRolled) => {
-        res.json({
-            number: numberRolled
-        });
+  diceAPI.rollDice((numberRolled) => {
+    res.json({
+      number: numberRolled
+    });
 
-        dbUtil.create(numberRolled);
+    dbUtil.create(numberRolled);
   });
-
-    // TODO
-
-    // 0.  Arduino/Wemos: Button click
-    // 01. Arduino stuurt request naar het endpoint waar deze comment zich in bevindt -> localhost:{$PORT}/rolldice
-
-    // 1. Request naar API: GET http://api.iot.hva-robots.nl/dice
-    // 2. Response van API: JSON met dice data
-    // 3. JSON parsen
-
-    // 4. Update DB met latest roll (UPDATE)
-
-    // 5. Van DB dice count ophalen (READ)
-    // 6. Correct plaatje ophalen
-
-    // 7. Met AJAX de browser updaten
-    //      > Update image
-    //      > Update counters
-    //      > Update DB rows
 });
 
 app.get("/dicedata", (req, res) => {
-    console.log("\nGET - /dicedata");
+  console.log("\nGET - /dicedata");
 
-    dbUtil.getDiceData((arrayDicedata) => {
-      res.json({
-        amount: arrayDicedata.length,
-        data: arrayDicedata
-      });
+  dbUtil.getDiceData((arrayDicedata) => {
+    res.json({
+      amount: arrayDicedata.length,
+      data: arrayDicedata
     });
+  });
 });
 
 app.get('/numbercount', (req, res) => {
-    console.log("\nGET - /numbercount");
+  console.log("\nGET - /numbercount");
 
-    let query = retrieveQuery(req);
-    
-    if (query.get("number") !== undefined) {
-        dbUtil.getCount(query.get('number'), (rollcount) => {
-          res.json({
-            count: rollcount
-          });
-        });
-      } else {
-        res.send("Error: missing 'number' query parameter");
-      }
-  });
+  let query = retrieveQuery(req);
 
-  app.get('/latestroll', (req, res) => {
-    console.log("\nGET - /latestroll");
-  
-    dbUtil.getLatestRoll((latestroll) => {
+  if (query.get("number") !== undefined) {
+    dbUtil.getCount(query.get('number'), (rollcount) => {
       res.json({
-        roll: latestroll,
+        count: rollcount
       });
     });
-  });
-
-  function retrieveQuery(req) {
-    let urlParts = new URL(baseURL + req.url);
-    return urlParts.searchParams;
+  } else {
+    res.send("Error: missing 'number' query parameter");
   }
+});
+
+app.get('/latestroll', (req, res) => {
+  console.log("\nGET - /latestroll");
+
+  dbUtil.getLatestRoll((latestroll) => {
+    res.json({
+      roll: latestroll,
+    });
+  });
+});
+
+function retrieveQuery(req) {
+  let urlParts = new URL(baseURL + req.url);
+  return urlParts.searchParams;
+}

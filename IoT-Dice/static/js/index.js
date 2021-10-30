@@ -12,6 +12,16 @@ function updateImage(rolledNumber) {
     lastRollImage.src = `../images/dice${rolledNumber}.jpg`;
 }
 
+/**
+ * Update the counter of the current number rolled
+ * 
+ * @param rolledNumber The current number rolled
+ * @param numberCount The number of times the <rolledNumber> has been rolled up until now
+ */
+ function updateCounter(rolledNumber, numberCount) {
+    const counter = document.getElementsByClassName(`statistic-side${rolledNumber}`).item(0);
+    counter.innerHTML = numberCount;
+  }
 function loadHTMLTable(data) {
     const table = document.getElementsByClassName('dicedata-table-body').item(0);
 

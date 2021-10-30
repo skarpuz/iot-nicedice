@@ -1,8 +1,16 @@
-document.addEventListener('DOMContentLoaded', function () {
-    fetch('http://localhost:5000/dicedata')
-    .then(response => response.json())
-    .then(data => loadHTMLTable(data['data']));
-});
+/**
+ * This JS file contains logic for the index.html file
+ */
+
+/**
+ * Update the image based on the current number rolled
+ * 
+ * @param rolledNumber The current number rolled
+ */
+function updateImage(rolledNumber) {
+    const lastRollImage = document.getElementsByClassName(`lastrollimg`).item(0);
+    lastRollImage.src = `../images/dice${rolledNumber}.jpg`;
+}
 
 function loadHTMLTable(data) {
     const table = document.getElementsByClassName('dicedata-table-body').item(0);
@@ -24,3 +32,38 @@ function loadHTMLTable(data) {
 
     table.innerHTML = tableHtml;
 }
+
+/**
+ * Get the information of the latest dice roll
+ * 
+ * @returns The number, time and date of the latest dice roll
+ */
+async function getLatestRoll() {
+    const response = await fetch("/latestroll");
+    const latestroll = await response.json(); //.json() returns the result of taking JSON as input and parsing it to produce a JavaScript object
+
+    return latestroll.roll;
+}
+
+/**
+ * General update function that calls the update functions for the separate components that need to be updated on the page
+ */
+async function update() {
+    fetch('http://localhost:5000/dicedata')
+        .then(response => response.json())
+        .then(data => loadHTMLTable(data['data']));
+
+    const latestRoll = await getLatestRoll();
+
+    // At start up the database is cleared, meaning getLatestRoll() has no data to fetch.
+    // In that case the number 0 is returned, a non-valid dice number.
+    // If the number of the latest roll is 0, we do not update the page.
+    if (latestRoll.number == 0) {
+        return;
+    }
+
+    const rolledNumber = latestRoll.number;
+    updateImage(rolledNumber);
+}
+
+document.addEventListener('DOMContentLoaded', update);

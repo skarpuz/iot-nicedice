@@ -2,6 +2,8 @@
  * This JS file contains logic for the index.html file
  */
 
+let prevTimestamp = 0;
+
 /**
  * Update the image based on the current number rolled
  * 
@@ -105,11 +107,16 @@ async function update() {
     }
 
     const rolledNumber = latestRoll.number;
+    const currTimestamp = latestRoll.time;
     const numberCount = await getNumberCount(rolledNumber);
 
-    updateImage(rolledNumber);
-    updateCounter(rolledNumber, numberCount);
-    updateHTMLTable();
+    // Only update the page if there is a new roll.
+    if (prevTimestamp !== currTimestamp) {
+        updateImage(rolledNumber);
+        updateCounter(rolledNumber, numberCount);
+        updateHTMLTable();
+        prevTimestamp = currTimestamp;
+    }
 }
 
 /**

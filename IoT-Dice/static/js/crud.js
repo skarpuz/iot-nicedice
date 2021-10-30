@@ -156,9 +156,31 @@ function getLatestRoll(callback) {
     });
 }
 
+function clearDB(callback) {
+    mysqlConnection.getConnection((err, conn) => {
+      if (err) {
+        console.log("ERROR!");
+        throw err;
+      }
+
+      let sql ="DELETE FROM `dicedata`;";
+
+      conn.query(sql, function (err, rows) {
+        if (err) {
+          throw err;
+        }
+
+        callback();
+      });
+
+      conn.release();
+    });
+}
+
 exports.create = CREATE;
 exports.getDiceData = READ;
 exports.update = UPDATE;
 exports.delete = DELETE;
 exports.getCount = getCount;
 exports.getLatestRoll = getLatestRoll;
+exports.clearDB = clearDB;

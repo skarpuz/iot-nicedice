@@ -17,6 +17,7 @@ app.use(express.static(__dirname + "/static"));
 
 http.createServer(app).listen(process.env.PORT, function () {
     console.log("dice-server listening on port " + process.env.PORT + "!");
+    dbUtil.clearDB(() => console.log("Database is cleared, ready for use."));
 });
 
 app.get("/rolldice", function (req, res) {

@@ -121,59 +121,69 @@ function getCount(numberRolled, callback) {
     });
 }
 
+/**
+ * Get the latest roll
+ * 
+ * @param callback The callback function to execute once this function is done
+ */
 function getLatestRoll(callback) {
     mysqlConnection.getConnection((err, conn) => {
-      if (err) {
-        console.log("ERROR!");
-        throw err;
-      }
-
-      let sql = "SELECT * FROM dicedata ORDER BY time DESC LIMIT 1;";
-
-      conn.query(sql, function (err, rows) {
         if (err) {
-          throw err;
+            console.log("ERROR!");
+            throw err;
         }
 
-        let latestRoll = {};
+        let sql = "SELECT * FROM dicedata ORDER BY time DESC LIMIT 1;";
 
-        if(rows.length != 0) {
-          latestRoll = {
-            number :  rows[0].number,
-            time : rows[0].time,
-            date : rows[0].date
-          };
-        } else {
-          latestRoll = {
-            number: 0
-          }
-        }
+        conn.query(sql, function (err, rows) {
+            if (err) {
+                throw err;
+            }
 
-        callback(latestRoll);
-      });
+            let latestRoll = {};
 
-      conn.release();
+            if (rows.length != 0) {
+                latestRoll = {
+                    number: rows[0].number,
+                    time: rows[0].time,
+                    date: rows[0].date
+                };
+            } else {
+                latestRoll = {
+                    number: 0
+                }
+            }
+
+            callback(latestRoll);
+        });
+
+        conn.release();
     });
 }
 
+/**
+ * Clear the database
+ * 
+ * @param callback The callback function to execute once this function is done
+ */
 function clearDB(callback) {
     mysqlConnection.getConnection((err, conn) => {
-      if (err) {
-        console.log("ERROR!");
-        throw err;
-      }
-
-      let sql ="DELETE FROM `dicedata`;";
-
-      conn.query(sql, function (err, rows) {
         if (err) {
-          throw err;
+            console.log("ERROR!");
+            throw err;
         }
 
-        callback();
-      });
+        let sql = "DELETE FROM `dicedata`;";
 
-      conn.release();
+        conn.query(sql, function (err, rows) {
+            if (err) {
+                throw err;
+            }
+
+            callback();
+        });
+
+        conn.release();
     });
 }
 

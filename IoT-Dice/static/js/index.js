@@ -78,8 +78,6 @@ async function update() {
         .then(data => loadHTMLTable(data['data']));
 
     const latestRoll = await getLatestRoll();
-    const rolledNumber = latestRoll.number;
-    const numberCount = await getNumberCount(rolledNumber);
 
     // At start up the database is cleared, meaning getLatestRoll() has no data to fetch.
     // In that case the number 0 is returned, a non-valid dice number.
@@ -87,6 +85,9 @@ async function update() {
     if (latestRoll.number == 0) {
         return;
     }
+    
+    const rolledNumber = latestRoll.number;
+    const numberCount = await getNumberCount(rolledNumber);
 
     updateImage(rolledNumber);
     updateCounter(rolledNumber, numberCount);

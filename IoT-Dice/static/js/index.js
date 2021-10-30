@@ -24,6 +24,14 @@ function updateImage(rolledNumber) {
   }
 
 /**
+ * Fetch dice data and call the loadHTMLTable function with that data
+ */
+function updateHTMLTable() {
+    fetch("http://localhost:5000/dicedata")
+      .then((jsonResponse) => jsonResponse.json()) //.json() returns the result of taking JSON as input and parsing it to produce a JavaScript object
+      .then((responseObject) => loadHTMLTable(responseObject.data));
+}
+/**
  * Construct an HTML table containing the dice data of all rolls
  * 
  * @param arrayOfRolls An array of all rolls up until now

@@ -3,6 +3,19 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(response => response.json())
     .then(data => loadHTMLTable(data['data']));
 });
+/**
+ * This JS file contains logic for the index.html file
+ */
+
+/**
+ * Update the image based on the current number rolled
+ * 
+ * @param rolledNumber The current number rolled
+ */
+function updateImage(rolledNumber) {
+    const lastRollImage = document.getElementsByClassName(`lastrollimg`).item(0);
+    lastRollImage.src = `../images/dice${rolledNumber}.jpg`;
+}
 
 function loadHTMLTable(data) {
     const table = document.getElementsByClassName('dicedata-table-body').item(0);

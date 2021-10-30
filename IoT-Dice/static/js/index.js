@@ -22,6 +22,7 @@ function updateImage(rolledNumber) {
     const counter = document.getElementsByClassName(`statistic-side${rolledNumber}`).item(0);
     counter.innerHTML = numberCount;
   }
+
 function loadHTMLTable(data) {
     const table = document.getElementsByClassName('dicedata-table-body').item(0);
 
@@ -77,6 +78,8 @@ async function update() {
         .then(data => loadHTMLTable(data['data']));
 
     const latestRoll = await getLatestRoll();
+    const rolledNumber = latestRoll.number;
+    const numberCount = await getNumberCount(rolledNumber);
 
     // At start up the database is cleared, meaning getLatestRoll() has no data to fetch.
     // In that case the number 0 is returned, a non-valid dice number.
@@ -85,8 +88,8 @@ async function update() {
         return;
     }
 
-    const rolledNumber = latestRoll.number;
     updateImage(rolledNumber);
+    updateCounter(rolledNumber, numberCount);
 }
 
 document.addEventListener('DOMContentLoaded', update);

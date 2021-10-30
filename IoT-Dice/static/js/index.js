@@ -31,31 +31,40 @@ function updateHTMLTable() {
       .then((jsonResponse) => jsonResponse.json()) //.json() returns the result of taking JSON as input and parsing it to produce a JavaScript object
       .then((responseObject) => loadHTMLTable(responseObject.data));
 }
+
 /**
  * Construct an HTML table containing the dice data of all rolls
  * 
  * @param arrayOfRolls An array of all rolls up until now
  */
-function loadHTMLTable(data) {
-    const table = document.getElementsByClassName('dicedata-table-body').item(0);
-
-    if(data.length === 0) {
-        table.innerHTML = "<tr><td class='no-data' colspan='5'>No data</td></tr>";
-        return;
+ function loadHTMLTable(arrayOfRolls) {
+    const table = document.getElementsByClassName("dicedata-table-body").item(0);
+  
+    if (arrayOfRolls.length === 0) {
+      table.innerHTML = "<tr><td class='no-data' colspan='5'>No data</td></tr>";
+      return;
     }
-
+  
     let tableHtml = "";
+  
+    arrayOfRolls.forEach((roll) => {
 
-    data.forEach(item => {
-        tableHtml += "<tr>";
-        tableHtml += `<td>${item["number"]}</td>`;
-        tableHtml += `<td>${new Date(item['date']).toLocaleString([], {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}</td>`;
-        tableHtml += `<td>${item['time']}</td>`;
-        tableHtml += "</tr>";
+      const rollDate = new Date(roll.date).toLocaleString([], {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+
+      tableHtml += "<tr>";
+      tableHtml += `<td>${roll.number}</td>`;
+      tableHtml += `<td>${rollDate}</td>`;
+      tableHtml += `<td>${roll.time}</td>`;
+      tableHtml += "</tr>";
     });
-
+  
     table.innerHTML = tableHtml;
-}
+  }
 
 /**
  * Get the information of the latest dice roll

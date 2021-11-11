@@ -2,6 +2,12 @@
 #include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
 #include <ArduinoJson.h>
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+ 
+LiquidCrystal_I2C lcd(0x27,16,2); // set the LCD address to 0x3F for a 16 chars and 2 line display
+
+StaticJsonDocument<3000> doc;
 
 int buttonPressed;
 int buttonPin = D3;
@@ -34,6 +40,13 @@ void setup() {
 
   // Initialize buttonPressed to 0, meaning it is not pressed (see code in the loop() function)
   buttonPressed = 0;
+
+  // initialize the lcd
+  lcd.init();
+  
+  // Print a message to the LCD.
+  lcd.backlight();
+  lcd.setCursor(0,0);
 }
 
 void loop() {
@@ -61,9 +74,30 @@ void sendHTTPRequest() {
   int httpStatusCode = httpClient.GET();
 
   if(httpStatusCode == HTTP_CODE_OK) { // HTTP_CODE_OK == 200
-    String payload = httpClient.getString();
+    String payloadString = httpClient.getString();
+    int str_len = payloadString.length() + 1;     // Length (with one extra character for the null terminator)
+    char payload[str_len];                        // Prepare the character array (the buffer) 
+    payloadString.toCharArray(payload, str_len);  // Copy it over 
+    
+    Serial.println("payload =");
     Serial.println(payload);
     Serial.println("Successfully sent a GET request!");
+
+    DeserializationError err = deserializeJson(doc, payload);
+
+    if(err){
+      Serial.println("ERROR");
+      Serial.println(err.c_str());
+      return;
+    }
+    
+    int latestRoll = doc["number"];
+    lcd.clear();
+    lcd.print("Rolling...");
+    delay(1500);
+    lcd.clear();
+    lcd.print("Latest roll: ");
+    lcd.print(latestRoll);
   } else {
     Serial.println("Unable to connect :(");
   }
